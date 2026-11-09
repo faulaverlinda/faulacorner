@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juragan Gadget - Jual Beli HP Semua Merk</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 50px;
+        }
+
+        /* Header & Navigasi */
+        header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        .logo p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .menu-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-add {
+            background-color: #f59e0b;
+            color: #fff;
+        }
+
+        .btn-add:hover {
+            background-color: #d97706;
+        }
+
+        .btn-reset {
+            background-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .btn-reset:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        /* Container Utama */
+        .container {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        /* Filter Merk */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .filter-btn {
+            background: white;
+            color: var(--text);
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Grid Etalase HP */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #e2e8f0;
+        }
+
+        .card-body {
+            padding: 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .badge-kondisi {
+            background: #dcfce7;
+            color: #166534;
+            margin-left: 5px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .card-spec {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .card-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            padding: 0 16px 16px;
+        }
+
+        .btn-order {
+            flex: 1;
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-order:hover {
+            background-color: #15803d;
+        }
+
+        .btn-delete {
+            background-color: #fee2e2;
+            color: var(--danger);
+            padding: 10px 12px;
+        }
+
+        .btn-delete:hover {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        /* Info Pembayaran Footer */
+        .payment-info {
+            background: white;
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .payment-info h3 {
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .pay-box {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .pay-box strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .close-btn {
+            background: none;
+            color: #64748b;
+            font-size: 1.5rem;
+            padding: 0;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .rekening-box {
+            background: #eff6ff;
+            border: 1px dashed #2563eb;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>📱 Juragan Gadget Store</h1>
+                <p>Pusat Jual Beli HP Baru & Second Semua Merk Terpercaya</p>
+            </div>
+            <div class="menu-buttons">
+                <button class="btn-add" onclick="bukaModalTambah()">+ Tambah HP ke Etalase</button>
+                <button class="btn-reset" onclick="resetDataDefault()">Reset Katalog</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Filter Merk -->
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" onclick="filterMerk('Semua', this)">Semua Merk</button>
+            <button class="filter-btn" onclick="filterMerk('iPhone', this)">Apple iPhone</button>
+            <button class="filter-btn" onclick="filterMerk('Samsung', this)">Samsung</button>
+            <button class="filter-btn" onclick="filterMerk('Xiaomi', this)">Xiaomi / POCO</button>
+            <button class="filter-btn" onclick="filterMerk('OPPO', this)">OPPO</button>
+            <button class="filter-btn" onclick="filterMerk('Vivo', this)">Vivo</button>
+            <button class="filter-btn" onclick="filterMerk('Lainnya', this)">Merk Lainnya</button>
+        </div>
+
+        <!-- Daftar Etalase HP -->
+        <div class="product-grid" id="etalaseHP"></div>
+
+        <!-- Informasi Metode Pembayaran -->
+        <div class="payment-info">
+            <h3>💳 Metode Pembayaran Tersedia</h3>
+            <div class="payment-grid">
+                <div class="pay-box">
+                    <strong>E-Wallet & QRIS</strong>
+                    <span>DANA, OVO, QRIS (All Payment)</span>
+                </div>
+                <div class="pay-box">
+                    <strong>Bank BRI</strong>
+                    <span>0123-01-004567-50-8 a.n Juragan Gadget</span>
+                </div>
+                <div class="pay-box">
+                    <strong>Bank BCA</strong>
+                    <span>7740-8899-12 a.n Juragan Gadget</span>
+                </div>
+                <div class="pay-box">
+                    <strong>Bank Mandiri</strong>
+                    <span>131-00-1234567-8 a.n Juragan Gadget</span>
+  
